@@ -194,7 +194,7 @@ export default function Dashboard() {
     <Box sx={{ display: 'flex' }}>
       <Sidebar />
       <Box sx={{ flexGrow: 1, padding: 3 }}>
-        <Typography variant="h4" gutterBottom>Dashboard</Typography>
+        <Typography variant="h4" gutterBottom>Employee Dashboard</Typography>
         <SummaryStats />
         <LatestQuotation />
         <Typography variant="h6" gutterBottom>All Projects</Typography>
