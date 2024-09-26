@@ -1,107 +1,206 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Toolbar, Typography } from '@mui/material';
-import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Box, Typography, Container, Grid, Paper, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import BusinessIcon from '@mui/icons-material/Business';
-import EventIcon from '@mui/icons-material/Event';
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import { AuthContext } from '../Auth/AuthContext'; // Import your AuthContext
+import CheckIcon from '@mui/icons-material/Check';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DetailsIcon from '@mui/icons-material/Info';
+import { Link } from 'react-router-dom';
 
-
-const drawerWidth = 240;
-
-function AdminDashboard() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { logout } = useContext(AuthContext); // Access logout function from AuthContext
-
-  const [currentTab, setCurrentTab] = useState('');
-
-  const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/admindashboard' },
-    { text: 'Payment Management', icon: <PeopleIcon />, path: '/admindashboard/payments-management' },
-    { text: 'User Management', icon: <PeopleIcon />, path: '/admindashboard/user-management' },
-    { text: 'Movie Management', icon: <AssignmentIcon />, path: '/admindashboard/movie-management' },
-    { text: 'Maintanance Management', icon: <InventoryIcon />, path: '/admindashboard/inventory-management' },
-    { text: 'Staff Management', icon: <PeopleIcon />, path: '/admindashboard/employee-management' },
-    { text: 'Supplier Management', icon: <BusinessIcon />, path: '/admindashboard/supplier-management' },
-    { text: 'Booking Management', icon: <BusinessIcon />, path: '/admindashboard/booking-management' },
-    { text: 'Promortion Management', icon: <EventIcon />, path: '/admindashboard/appointment-management' },
-    { text: 'Feedback Management', icon: <FeedbackIcon />, path: '/admindashboard/feedback-management' },
-    { text: 'Support Management', icon: <SupportAgentIcon />, path: '/admindashboard/support-management' },
-  ];
-
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const currentItem = menuItems.find(item => item.path === currentPath);
-    if (currentItem) {
-      setCurrentTab(currentItem.text);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
-  const handleMenuClick = (path) => {
-    navigate(path);
-  };
-
-  const handleLogout = () => {
-    logout(); // Call logout function from AuthContext
-    navigate('/login'); // Redirect to login page or home page
-  };
-
+// Sidebar Navigation
+function Sidebar() {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Toolbar />
-        <List>
-          {menuItems.map((item, index) => (
-            <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
-          {/* Logout Button */}
-          <ListItem button onClick={handleLogout}>
-            <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          backgroundColor: '#f4f6f8',
-          minHeight: '100vh',
-        }}
-      >
-        <Toolbar />
-        <Typography variant="h5" sx={{ marginBottom: 2 }}>
-          {currentTab}
-        </Typography>
-        <Outlet /> {/* Render nested routes */}
+    <Box sx={{ width: 240, backgroundColor: '#1C1C1C', color: '#FFF', minHeight: '100vh', paddingTop: 2 }}>
+      <Typography variant="h6" sx={{ paddingLeft: 2 }}>Hiruna Kithsandu</Typography>
+      <Typography variant="subtitle2" sx={{ paddingLeft: 2 }}>Employee Manager</Typography>
+      <Box sx={{ paddingTop: 4 }}>
+        <Button
+          component={Link}
+          to="/EmployeeDashboard"
+          startIcon={<DashboardIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Dashboard
+        </Button>
+        <Button
+          component={Link}
+          to="/suppliers"
+          startIcon={<PeopleIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Employees
+        </Button>
+        <Button
+          component={Link}
+          to="/orders"
+          startIcon={<ListAltIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Orders
+        </Button>
+        <Button
+          component={Link}
+          to="/quotation"
+          startIcon={<DescriptionIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Quotation
+        </Button>
+        <Button
+          component={Link}
+          to="/supplier-quality"
+          startIcon={<AssessmentIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Supplier Quality
+        </Button>
+        <Button
+          component={Link}
+          to="/inventory-requests"
+          startIcon={<InventoryIcon />}
+          fullWidth
+          sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+        >
+          Inventory Requests
+        </Button>
       </Box>
     </Box>
   );
 }
 
-export default AdminDashboard;
+// Summary Stats
+function SummaryStats() {
+  return (
+    <Grid container spacing={3} sx={{ marginTop: 2 }}>
+      <Grid item xs={12} sm={3}>
+        <Paper elevation={3} sx={{ padding: 2 }}>
+          <Typography variant="h6">Total Employees</Typography>
+          <Typography variant="h4" sx={{ color: '#FF0000' }}>141</Typography>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} sm={3}>
+        <Paper elevation={3} sx={{ padding: 2 }}>
+          <Typography variant="h6">Project Requests</Typography>
+          <Typography variant="h4" sx={{ color: '#FFAB00' }}>24</Typography>
+        </Paper>
+      </Grid>
+    </Grid>
+  );
+}
+
+// Latest Quotation Table
+function LatestQuotation() {
+  const employees = [
+    { name: 'Sithija Udayawickrama', email: 'sijja25@gmail.com', job: 'Base Worker', phone: '076-343-3355' },
+    { name: 'Dihara Nanayakkara', email: 'diharan@gmail.com', job: 'Assistant Engineer', phone: '078-766-4544' },
+    { name: 'Venuja Geenodh', email: 'venuajg@yahoo.com', job: 'Civil Engineer', phone: '071-334-5656' },
+    { name: 'Nethum Bandara', email: 'nethumb@kaviauto.lk', job: 'Senior Engineer', phone: '077-200-5676' },
+    { name: 'Sandupa Wickramasinghe', email: 'sandupa@nexconic.com', job: 'Electrical Engineer', phone: '076-768-56787' },
+  ];
+
+  return (
+    <Paper elevation={3} sx={{ padding: 2, marginTop: 4 }}>
+      <Typography variant="h6" sx={{ marginBottom: 2 }}>Latest Quotation</Typography>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Job Role</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.map((employee, index) => (
+              <TableRow key={index}>
+                <TableCell>{employee.name}</TableCell>
+                <TableCell>{employee.email}</TableCell>
+                <TableCell>{employee.job}</TableCell>
+                <TableCell>{employee.phone}</TableCell>
+                <TableCell>
+                  <Button variant="contained" color="warning" sx={{ marginRight: '10px' }}>
+                    Details
+                  </Button>
+                  <Button variant="contained" color="error">
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  );
+}
+
+// Latest Orders Table
+const projects = [
+  { name: 'House Colombo', id: 1, status: 'Complete' },
+  { name: 'Lanka Hospitals', id: 3, status: 'Pending' },
+  { name: 'Villa', id: 5, status: 'Complete' },
+];
+
+const ProjectRequests = () => {
+  return (
+    <Box sx={{ marginTop: '20px' }}>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Project Name</TableCell>
+              <TableCell>Project ID</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {projects.map((project, index) => (
+              <TableRow key={index}>
+                <TableCell>{project.name}</TableCell>
+                <TableCell>{project.id}</TableCell>
+                <TableCell>{project.status}</TableCell>
+                <TableCell>
+                  <Button variant="contained" color="warning" sx={{ marginRight: '10px' }}>
+                    Assign
+                  </Button>
+                  <Button variant="contained" color="error">
+                    Decline
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+};
+
+
+export default function Dashboard() {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <Sidebar />
+      <Box sx={{ flexGrow: 1, padding: 3 }}>
+        <Typography variant="h4" gutterBottom>Dashboard</Typography>
+        <SummaryStats />
+        <LatestQuotation />
+        <Typography variant="h6" gutterBottom>All Projects</Typography>
+
+        <ProjectRequests/>
+      </Box>
+    </Box>
+  );
+}

@@ -9,7 +9,10 @@ import Orders from './Components/Supplier/Orders';
 import Quotation from './Components/Supplier/Quotation';
 import InventoryRequests from './Components/Supplier/InventoryRequests';
 
-
+import Employees from './Components/Employee/Employee';
+import Dashboard from './Components/Employee/Dashboard';
+import ProjectRequests from './Components/Employee/ProjectRequests';
+import Sidebar from './Components/Employee/Sidebar';
 
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import SupplierDashboard from './Components/Admin/SupplierDashboard';
@@ -53,6 +56,10 @@ function App() {
           <Route path='/quotation' element={<Quotation />} />
           <Route path='/orders' element={<Orders />} />
 
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/orders' element={<Orders />} />
 
 
 
