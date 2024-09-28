@@ -38,8 +38,18 @@ function AddEmployee({ onBack }) {
   };
 
   return (
-    <Box sx={{ padding: 3, backgroundColor: 'white', borderRadius: 1 }}>
-      <Typography variant="h5" gutterBottom>
+    <Box
+      sx={{
+        padding: 4,
+        backgroundColor: 'white',
+        borderRadius: 2,
+        boxShadow: 2,
+        width: '60%',
+        margin: 'auto',
+        marginTop: 5,
+      }}
+    >
+      <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
         Add New Employee
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -50,6 +60,7 @@ function AddEmployee({ onBack }) {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          variant="outlined"
         />
         <TextField
           label="Email"
@@ -58,6 +69,7 @@ function AddEmployee({ onBack }) {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          variant="outlined"
         />
         <TextField
           label="Position"
@@ -66,6 +78,7 @@ function AddEmployee({ onBack }) {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          variant="outlined"
         />
         <TextField
           label="Phone"
@@ -74,6 +87,7 @@ function AddEmployee({ onBack }) {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          variant="outlined"
         />
         <TextField
           label="Address"
@@ -82,25 +96,26 @@ function AddEmployee({ onBack }) {
           onChange={handleChange}
           fullWidth
           margin="normal"
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{ marginTop: 2 }}
-        >
-          Add Employee
-        </Button>
-        <Button
           variant="outlined"
-          color="secondary"
-          sx={{ marginTop: 2, marginLeft: 2 }}
-          onClick={onBack}
-        >
-          Back
-        </Button>
+        />
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ backgroundColor: 'yellow', color: 'black', marginRight: 2 }}
+          >
+            Add Employee
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: 'black', color: 'white' }}
+            onClick={onBack}
+          >
+            Back
+          </Button>
+        </Box>
         {error && (
-          <Typography color="error" sx={{ marginTop: 2 }}>
+          <Typography color="error" sx={{ marginTop: 2, textAlign: 'center' }}>
             {error}
           </Typography>
         )}

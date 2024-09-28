@@ -9,6 +9,8 @@ import Orders from './Components/Supplier/Orders';
 import Quotation from './Components/Supplier/Quotation';
 import InventoryRequests from './Components/Supplier/InventoryRequests';
 
+import EmployeeList from './Components/Employee/EmployeeList';
+import AttendancePage from './Components/Employee/Attendance';
 import Employees from './Components/Employee/Employee';
 import Dashboard from './Components/Employee/Dashboard';
 import ProjectRequests from './Components/Employee/ProjectRequests';
@@ -56,8 +58,8 @@ function App() {
           <Route path='/quotation' element={<Quotation />} />
           <Route path='/orders' element={<Orders />} />
 
-          <Route path='/orders' element={<Orders />} />
-          <Route path='/orders' element={<Orders />} />
+          <Route path='/EmployeeList' element={<EmployeeList />} />
+          <Route path='/attendance' element={<AttendancePage />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/orders' element={<Orders />} />
 

@@ -4,11 +4,83 @@ import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import { Edit, Delete, Add } from '@mui/icons-material';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import AddEmployee from './AddEmployee'; // Adjust path as necessary
+import { Link } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import PeopleIcon from '@mui/icons-material/People';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import AddEmployee from '../Admin/Employees/AddEmployee'; // Adjust path as necessary
 import { useNavigate } from 'react-router-dom';
 
 const URL = "http://localhost:4001/employees";
 
+function Sidebar() {
+    return (
+      <Box sx={{ width: 240, backgroundColor: '#1C1C1C', color: '#FFF', minHeight: '100vh', paddingTop: 2 }}>
+        <Typography variant="h6" sx={{ paddingLeft: 2 }}>Hiruna Kithsandu</Typography>
+        <Typography variant="subtitle2" sx={{ paddingLeft: 2 }}>Employee Manager</Typography>
+        <Box sx={{ paddingTop: 4 }}>
+          <Button
+            component={Link}
+            to="/EmployeeDashboard"
+            startIcon={<DashboardIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Dashboard
+          </Button>
+          <Button
+            component={Link}
+            to="/EmployeeList"
+            startIcon={<PeopleIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Employees
+          </Button>
+          <Button
+            component={Link}
+            to="/attendance"
+            startIcon={<ListAltIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Attendance
+          </Button>
+          <Button
+            component={Link}
+            to="/quotation"
+            startIcon={<DescriptionIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Quotation
+          </Button>
+          <Button
+            component={Link}
+            to="/supplier-quality"
+            startIcon={<AssessmentIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Supplier Quality
+          </Button>
+          <Button
+            component={Link}
+            to="/inventory-requests"
+            startIcon={<InventoryIcon />}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: '#FFF' }}
+          >
+            Inventory Requests
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
+  
 const fetchEmployees = async () => {
   try {
     const response = await axios.get(URL);
@@ -19,7 +91,7 @@ const fetchEmployees = async () => {
   }
 };
 
-function EmployeeDetails() {
+function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [noResults, setNoResults] = useState(false);
@@ -216,5 +288,16 @@ function EmployeeDetails() {
     </Box>
   );
 }
-
-export default EmployeeDetails;
+export default function el() {
+    return (
+        <Box sx={{ display: 'flex' }}>
+      {/* Sidebar takes a fixed width */}
+      <Sidebar />
+      
+      {/* Main content fills the remaining space */}
+      <Box sx={{ flexGrow: 1 }}>
+        <EmployeeList />
+      </Box>
+    </Box>
+    );
+}

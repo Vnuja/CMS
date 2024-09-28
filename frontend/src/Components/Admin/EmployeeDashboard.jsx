@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DetailsIcon from '@mui/icons-material/Info';
 import { Link } from 'react-router-dom';
 
+
 // Sidebar Navigation
 function Sidebar() {
   return (
@@ -29,7 +30,7 @@ function Sidebar() {
         </Button>
         <Button
           component={Link}
-          to="/suppliers"
+          to="/EmployeeList"
           startIcon={<PeopleIcon />}
           fullWidth
           sx={{ justifyContent: 'flex-start', color: '#FFF' }}
@@ -129,12 +130,11 @@ function LatestQuotation() {
                 <TableCell>{employee.job}</TableCell>
                 <TableCell>{employee.phone}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="warning" sx={{ marginRight: '10px' }}>
-                    Details
-                  </Button>
-                  <Button variant="contained" color="error">
-                    Delete
-                  </Button>
+
+                  <Button sx={{ backgroundColor: '#FEC304', color: 'white', marginRight: 1 }}>Details</Button>
+                  <Button sx={{ backgroundColor: '#000', color: 'white' }} onClick={() => deleteEmployee(item._id)}>Delete</Button>
+
+
                 </TableCell>
               </TableRow>
             ))}
@@ -148,7 +148,7 @@ function LatestQuotation() {
 // Latest Orders Table
 const projects = [
   { name: 'House Colombo', id: 1, status: 'Complete' },
-  { name: 'Lanka Hospitals', id: 3, status: 'Pending' },
+  { name: 'Lanka Hospitals', id: 3, status: 'PENDING' },
   { name: 'Villa', id: 5, status: 'Complete' },
 ];
 
@@ -170,14 +170,14 @@ const ProjectRequests = () => {
               <TableRow key={index}>
                 <TableCell>{project.name}</TableCell>
                 <TableCell>{project.id}</TableCell>
-                <TableCell>{project.status}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="warning" sx={{ marginRight: '10px' }}>
-                    Assign
-                  </Button>
-                  <Button variant="contained" color="error">
-                    Decline
-                  </Button>
+                                    <Button variant="contained" sx={{ backgroundColor: project.status === 'PENDING' ? '#FFAB00' : '#00C853', color: '#FFF' }}>
+                                        {project.status}
+                                    </Button>
+                                </TableCell>                <TableCell>
+                                <Button sx={{ backgroundColor: '#FEC304', color: 'white', marginRight: 1 }}>Details</Button>
+                  <Button sx={{ backgroundColor: '#000', color: 'white' }}>Delete</Button>
+
                 </TableCell>
               </TableRow>
             ))}
@@ -199,7 +199,7 @@ export default function Dashboard() {
         <LatestQuotation />
         <Typography variant="h6" gutterBottom>All Projects</Typography>
 
-        <ProjectRequests/>
+        <ProjectRequests />
       </Box>
     </Box>
   );
