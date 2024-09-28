@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Paper, Avatar, Button, Typography } from '@mui/material';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Search } from '@mui/icons-material';
+import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Paper, Avatar, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
@@ -10,11 +8,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import ReceiptIcon from '@mui/icons-material/Receipt'; // Icon for Attendance Reports
-import AssignmentIcon from '@mui/icons-material/Assignment'; // Icon for Leave Requests
 
-// Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Sidebar() {
     return (
@@ -31,180 +25,119 @@ function Sidebar() {
                 <Button component={Link} to="/attendance" startIcon={<ListAltIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
                     Attendance
                 </Button>
-                <Button component={Link} to="/quotation" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Quotation
+                <Button component={Link} to="/payroll" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+                    Payroll
                 </Button>
-                <Button component={Link} to="/supplier-quality" startIcon={<AssessmentIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Supplier Quality
-                </Button>
-                <Button component={Link} to="/inventory-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Inventory Requests
+                <Button component={Link} to="/project-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+                    Project Requests
                 </Button>
             </Box>
         </Box>
     );
 }
 
-const employeesData = [
-    { name: 'Sithija Udayawickrama', date: '10/08/2024', punchIn: '9:00 AM', punchOut: '4:00 PM', available: 'Unavailable' },
-    { name: 'Dihara Nanayakkara', date: '10/08/2024', punchIn: '8:00 AM', punchOut: '4:30 PM', available: 'Available' },
-    { name: 'Venuja Geenodh', date: '09/08/2024', punchIn: '9:30 AM', punchOut: '5:30 PM', available: 'Available' },
-    { name: 'Nethum Bandara', date: '09/08/2024', punchIn: '8:00 AM', punchOut: '5:00 PM', available: 'Unavailable' },
-    { name: 'Sandupa Wickramasinghe', date: '09/08/2024', punchIn: '11:00 AM', punchOut: '5:40 PM', available: 'Unavailable' },
+// Dummy Data for Leave Requests
+const leaveRequestsData = [
+  { name: 'Sithija Udayawickrama', email: 'sijija25@gmail.com', leaveDate: '25/08/2024' },
+  { name: 'Sandupa Wickramasinghe', email: 'sandupa@nexconic.com', leaveDate: '10/09/2024' },
 ];
 
-const AttendancePage = () => {
-    const [searchQuery, setSearchQuery] = useState('');
+const LeaveRequests = () => {
+  const [searchQuery, setSearchQuery] = useState('');
 
-    // Filter employees based on search query
-    const filteredEmployees = employeesData.filter(employee =>
-        employee.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  // Filter employees based on search query
+  const filteredLeaveRequests = leaveRequestsData.filter(request =>
+    request.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    // Pie chart data
-    const data = {
-        labels: ['Present', 'Absent'],
-        datasets: [
-            {
-                data: [63, 22],
-                backgroundColor: ['#3b82f6', '#ef4444'],
-            },
-        ],
-    };
-
-    return (
-        <Box sx={{ p: 4 }}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 4 }}>
-                Attendance List
-            </Typography>
-
-            {/* New Box for buttons */}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-    <Button 
-        variant="contained" 
-        startIcon={<ReceiptIcon />} 
-        sx={{ 
-            marginRight: 1, 
-            backgroundColor: '#FBBF24', // Yellow color for Attendance Reports
-            color: '#000', // Black text color
-            '&:hover': {
-                backgroundColor: '#EAB308', // Darker yellow on hover
-            }
-        }} 
-        component={Link} 
-        to="/attendance-reports"
-    >
-        Attendance Reports
-    </Button>
-    <Button 
-        variant="contained" 
-        startIcon={<AssignmentIcon />} 
-        sx={{ 
-            backgroundColor: '#000', // Black color for Leave Requests
-            color: '#FFF', // White text color
-            '&:hover': {
-                backgroundColor: '#333', // Darker black on hover
-            }
-        }} 
-        component={Link} 
-        to="/leave-requests"
-    >
+  return (
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 4 }}>
         Leave Requests
-    </Button>
-</Box>
+      </Typography>
 
+      {/* Search Bar */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Search Employees"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          InputProps={{
+            startAdornment: <Search sx={{ mr: 1 }} />,
+          }}
+        />
+      </Box>
 
-            <Grid container spacing={4}>
-                {/* Left Section: Employee List */}
-                <Grid item xs={12} md={8}>
-                    <Box sx={{ mb: 2 }}>
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            placeholder="Search Employees"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            InputProps={{
-                                startAdornment: <Search sx={{ mr: 1 }} />,
-                            }}
-                        />
-                    </Box>
-
-                    {/* Attendance Table */}
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell><strong>Name</strong></TableCell>
-                                    <TableCell><strong>Date</strong></TableCell>
-                                    <TableCell><strong>Punch In</strong></TableCell>
-                                    <TableCell><strong>Punch Out</strong></TableCell>
-                                    <TableCell><strong>Availability</strong></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {filteredEmployees.map((employee, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                <Avatar sx={{ mr: 2 }} />
-                                                {employee.name}
-                                            </Box>
-                                        </TableCell>
-                                        <TableCell>{employee.date}</TableCell>
-                                        <TableCell>{employee.punchIn}</TableCell>
-                                        <TableCell>{employee.punchOut}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    backgroundColor: employee.available === 'Available' ? '#34D399' : '#FBBF24',
-                                                    color: '#fff',
-                                                }}
-                                            >
-                                                {employee.available}
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-
-                {/* Right Section: Attendance Summary */}
-                <Grid item xs={12} md={4}>
-                    <Box sx={{ p: 3, backgroundColor: 'white', borderRadius: 2, boxShadow: 2 }}>
-                        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                            Total Attendance
-                        </Typography>
-                        <Pie data={data} />
-                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-around' }}>
-                            <Typography variant="body1" sx={{ color: '#3b82f6' }}>
-                                Present: 63%
-                            </Typography>
-                            <Typography variant="body1" sx={{ color: '#ef4444' }}>
-                                Absent: 22%
-                            </Typography>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Grid>
-        </Box>
-    );
+      {/* Leave Requests Table */}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell><strong>Email</strong></TableCell>
+              <TableCell><strong>Leave Date</strong></TableCell>
+              <TableCell><strong>Actions</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredLeaveRequests.map((request, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Avatar sx={{ mr: 2 }} />
+                    {request.name}
+                  </Box>
+                </TableCell>
+                <TableCell>{request.email}</TableCell>
+                <TableCell>{request.leaveDate}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: '#FBBF24', // Yellow for Approve button
+                      color: '#000',
+                      marginRight: 1,
+                      '&:hover': {
+                        backgroundColor: '#EAB308', // Darker Yellow on hover
+                      }
+                    }}
+                  >
+                    Approve
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: '#000', // Black for Decline button
+                      color: '#FFF',
+                      '&:hover': {
+                        backgroundColor: '#333', // Darker black on hover
+                      }
+                    }}
+                  >
+                    Decline
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
 };
 
 // Main Export Component
-export default function el() {
-    return (
-        <Box sx={{ display: 'flex' }}>
-            {/* Sidebar takes a fixed width */}
-            <Sidebar />
-            
-            {/* Main content fills the remaining space */}
-            <Box sx={{ flexGrow: 1 }}>
-                <AttendancePage />
-            </Box>
-        </Box>
-    );
+export default function LeaveRequestsPage() {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      {/* Sidebar for navigation */}
+      <Sidebar />
+      {/* Main content */}
+      <Box sx={{ flexGrow: 1 }}>
+        <LeaveRequests />
+      </Box>
+    </Box>
+  );
 }

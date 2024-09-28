@@ -3,15 +3,16 @@ import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, Tabl
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Search } from '@mui/icons-material';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import DescriptionIcon from '@mui/icons-material/Description';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import ReceiptIcon from '@mui/icons-material/Receipt'; // Icon for Attendance Reports
-import AssignmentIcon from '@mui/icons-material/Assignment'; // Icon for Leave Requests
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import jsPDF from 'jspdf';  // Import jsPDF
+import 'jspdf-autotable';   // Import autoTable plugin
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -31,14 +32,11 @@ function Sidebar() {
                 <Button component={Link} to="/attendance" startIcon={<ListAltIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
                     Attendance
                 </Button>
-                <Button component={Link} to="/quotation" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Quotation
+                <Button component={Link} to="/payroll" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+                    Payroll
                 </Button>
-                <Button component={Link} to="/supplier-quality" startIcon={<AssessmentIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Supplier Quality
-                </Button>
-                <Button component={Link} to="/inventory-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                    Inventory Requests
+                <Button component={Link} to="/project-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+                    Project Requests
                 </Button>
             </Box>
         </Box>
@@ -72,6 +70,16 @@ const AttendancePage = () => {
         ],
     };
 
+    // Function to generate PDF
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        doc.autoTable({
+            head: [['Name', 'Date', 'Punch In', 'Punch Out', 'Availability']],
+            body: filteredEmployees.map(emp => [emp.name, emp.date, emp.punchIn, emp.punchOut, emp.available]),
+        });
+        doc.save('attendance-report.pdf');
+    };
+
     return (
         <Box sx={{ p: 4 }}>
             <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 4 }}>
@@ -80,39 +88,37 @@ const AttendancePage = () => {
 
             {/* New Box for buttons */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-    <Button 
-        variant="contained" 
-        startIcon={<ReceiptIcon />} 
-        sx={{ 
-            marginRight: 1, 
-            backgroundColor: '#FBBF24', // Yellow color for Attendance Reports
-            color: '#000', // Black text color
-            '&:hover': {
-                backgroundColor: '#EAB308', // Darker yellow on hover
-            }
-        }} 
-        component={Link} 
-        to="/attendance-reports"
-    >
-        Attendance Reports
-    </Button>
-    <Button 
-        variant="contained" 
-        startIcon={<AssignmentIcon />} 
-        sx={{ 
-            backgroundColor: '#000', // Black color for Leave Requests
-            color: '#FFF', // White text color
-            '&:hover': {
-                backgroundColor: '#333', // Darker black on hover
-            }
-        }} 
-        component={Link} 
-        to="/leave-requests"
-    >
-        Leave Requests
-    </Button>
-</Box>
-
+                <Button 
+                    variant="contained" 
+                    startIcon={<ReceiptIcon />} 
+                    sx={{ 
+                        marginRight: 1, 
+                        backgroundColor: '#FBBF24', 
+                        color: '#000', 
+                        '&:hover': {
+                            backgroundColor: '#EAB308',
+                        }
+                    }} 
+                    onClick={generatePDF} // Call PDF generation on click
+                >
+                    Attendance Reports
+                </Button>
+                <Button 
+                    variant="contained" 
+                    startIcon={<AssignmentIcon />} 
+                    sx={{ 
+                        backgroundColor: '#000', 
+                        color: '#FFF', 
+                        '&:hover': {
+                            backgroundColor: '#333',
+                        }
+                    }} 
+                    component={Link} 
+                    to="/leave-requests"
+                >
+                    Leave Requests
+                </Button>
+            </Box>
 
             <Grid container spacing={4}>
                 {/* Left Section: Employee List */}

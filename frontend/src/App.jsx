@@ -11,6 +11,8 @@ import InventoryRequests from './Components/Supplier/InventoryRequests';
 
 import EmployeeList from './Components/Employee/EmployeeList';
 import AttendancePage from './Components/Employee/Attendance';
+import LeaveReq from './Components/Employee/LeaveReq';
+
 import Employees from './Components/Employee/Employee';
 import Dashboard from './Components/Employee/Dashboard';
 import ProjectRequests from './Components/Employee/ProjectRequests';
@@ -60,7 +62,7 @@ function App() {
 
           <Route path='/EmployeeList' element={<EmployeeList />} />
           <Route path='/attendance' element={<AttendancePage />} />
-          <Route path='/orders' element={<Orders />} />
+          <Route path='/leave-requests' element={<LeaveReq />} />
           <Route path='/orders' element={<Orders />} />
 
 
