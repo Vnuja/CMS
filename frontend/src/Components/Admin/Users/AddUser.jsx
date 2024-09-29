@@ -97,6 +97,9 @@ function AddUser({ onBack }) {
           >
             <MenuItem value="user">User</MenuItem>
             <MenuItem value="admin">Admin</MenuItem>
+            <MenuItem value="supplier">Supplier</MenuItem>
+            <MenuItem value="employee">Employee</MenuItem>
+
           </Select>
         </FormControl>
         <Button
