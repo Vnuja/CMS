@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import Register from './Components/Login/Register';
 import SupplierList from './Components/Supplier/SupplierList';
+import SupplierManagement from './Components/Supplier/SupplierProfile';
 import SupplierQuality from './Components/Supplier/SupplierQuality';
 import Orders from './Components/Supplier/Orders';
 import Quotation from './Components/Supplier/Quotation';
@@ -54,6 +55,7 @@ function App() {
           <Route path='/signup' element={<Register />} />
           <Route path='/suppliers' element={<SupplierList />} />
           <Route path='/supplier-quality' element={<SupplierQuality />} />
+          <Route path='/suppliers/:id' element={<SupplierManagement />} />
           <Route path='/inventory-requests' element={<InventoryRequests />} />
           <Route path='/quotation' element={<Quotation />} />
           <Route path='/orders' element={<Orders />} />

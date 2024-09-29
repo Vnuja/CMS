@@ -46,7 +46,7 @@ function SupplierList() {
     }, []);
 
     const handleEdit = (id) => {
-        navigate(`/admindashboard/update-supplier/${id}`);
+        navigate(`/suppliers/${id}`);
     };
 
     const deleteSupplier = async (id) => {
@@ -238,7 +238,13 @@ function SupplierList() {
                                                 </TableCell>
                                                 <TableCell>{item.phone}</TableCell>
                                                 <TableCell>
-                                                    <Button sx={{ backgroundColor: '#FEC304', color: 'white', marginRight: 1 }}>Details</Button>
+                                                    <Button
+                                                        variant="contained"
+                                                        sx={{ backgroundColor: '#FFC107', color: 'black', marginRight: 1 }}
+                                                        onClick={() => handleEdit(item._id)} // Use item._id here
+                                                    >
+                                                        Details
+                                                    </Button>
                                                     <Button sx={{ backgroundColor: '#000', color: 'white' }} onClick={() => deleteSupplier(item._id)}>Delete</Button>
                                                 </TableCell>
                                             </TableRow>

@@ -14,6 +14,18 @@ function UpdateSupplier() {
         quality: '',
         phone: ''
     });
+    const [errors, setErrors] = useState({
+        name: '',
+        email: '',
+        quality: '',
+        phone: '',
+    });
+
+    const [isNameValid, setIsNameValid] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isQualityValid, setIsQualityValid] = useState(false);
+    const [isPhoneValid, setIsPhoneValid] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,13 +38,73 @@ function UpdateSupplier() {
             });
     }, [id]);
 
+    // Validation regex patterns
+    const nameRegex = /^[A-Z][a-zA-Z\s]*$/; // Allow spaces in the name
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+94\s[0-9]{9}$/; // Format: +94 followed by 9 digits
+
+    const validateNameField = () => {
+        if (formData.name.trim() && nameRegex.test(formData.name)) {
+            setIsNameValid(true);
+            setErrors(prevErrors => ({ ...prevErrors, name: '' }));
+        } else {
+            setIsNameValid(false);
+            setErrors(prevErrors => ({ ...prevErrors, name: 'Name must start with a capital letter and can contain only letters and spaces.' }));
+        }
+    };
+
+    const validateEmailField = () => {
+        if (formData.email.trim() && emailRegex.test(formData.email)) {
+            setIsEmailValid(true);
+            setErrors(prevErrors => ({ ...prevErrors, email: '' }));
+        } else {
+            setIsEmailValid(false);
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Invalid email format' }));
+        }
+    };
+
+    const validateQualityField = () => {
+        const qualityValue = parseInt(formData.quality, 10);
+        if (isNaN(qualityValue) || qualityValue < 0 || qualityValue > 100) {
+            setIsQualityValid(false);
+            setErrors(prevErrors => ({ ...prevErrors, quality: 'Quality must be a number between 0 and 100' }));
+        } else {
+            setIsQualityValid(true);
+            setErrors(prevErrors => ({ ...prevErrors, quality: '' }));
+        }
+    };
+
+    const validatePhoneField = () => {
+        if (formData.phone.trim() && phoneRegex.test(`+94 ${formData.phone}`)) {
+            setIsPhoneValid(true);
+            setErrors(prevErrors => ({ ...prevErrors, phone: '' }));
+        } else {
+            setIsPhoneValid(false);
+            setErrors(prevErrors => ({ ...prevErrors, phone: 'Invalid phone number format (must start with +94 and followed by 9 digits)' }));
+        }
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        setErrors(prevErrors => ({ ...prevErrors, [name]: '' })); // Clear error on input change
+
+        // Trigger validation for each field as it changes
+        if (name === 'name') validateNameField();
+        if (name === 'email') validateEmailField();
+        if (name === 'quality') validateQualityField();
+        if (name === 'phone') validatePhoneField();
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Ensure all fields are valid before submission
+        if (!(isNameValid && isEmailValid && isQualityValid && isPhoneValid)) {
+            alert('Please fix the errors before submitting.'); // Using alert for feedback
+            return;
+        }
+
         try {
             await axios.put(`${URL}/${id}`, formData);
             navigate('/admindashboard');
@@ -53,6 +125,8 @@ function UpdateSupplier() {
                     value={formData.name}
                     onChange={handleChange}
                     margin="normal"
+                    error={!!errors.name}
+                    helperText={errors.name}
                 />
                 <TextField
                     label="Email"
@@ -63,6 +137,8 @@ function UpdateSupplier() {
                     value={formData.email}
                     onChange={handleChange}
                     margin="normal"
+                    error={!!errors.email}
+                    helperText={errors.email}
                 />
                 <TextField
                     label="Quality"
@@ -72,6 +148,8 @@ function UpdateSupplier() {
                     value={formData.quality}
                     onChange={handleChange}
                     margin="normal"
+                    error={!!errors.quality}
+                    helperText={errors.quality}
                 />
                 <TextField
                     label="Phone"
@@ -81,6 +159,8 @@ function UpdateSupplier() {
                     value={formData.phone}
                     onChange={handleChange}
                     margin="normal"
+                    error={!!errors.phone}
+                    helperText={errors.phone}
                 />
                 <Button
                     type="submit"
