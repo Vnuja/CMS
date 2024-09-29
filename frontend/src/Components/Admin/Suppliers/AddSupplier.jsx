@@ -34,8 +34,8 @@ function AddSupplier({ onBack }) {
             setSnackbarMessage('Supplier added successfully');
             setSnackbarSeverity('success');
             setOpenSnackbar(true);
-            // Redirect after a short delay
-            setTimeout(() => navigate('http://localhost:5173/suppliers'), 2000);
+            navigate('/suppliers');
+
         } catch (error) {
             console.error("Error adding supplier:", error.response ? error.response.data : error.message);
             setSnackbarMessage('Error adding supplier: ' + (error.response ? error.response.data.message : error.message));
@@ -43,6 +43,8 @@ function AddSupplier({ onBack }) {
             setOpenSnackbar(true);
         }
     };
+    
+    
 
     const handleSnackbarClose = () => {
         setOpenSnackbar(false);

@@ -9,7 +9,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import DescriptionIcon from '@mui/icons-material/Description';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import AddEmployee from '../Admin/Employees/AddEmployee'; // Adjust path as necessary
 import { useNavigate } from 'react-router-dom';
@@ -19,30 +18,30 @@ const URL = "http://localhost:4001/employees";
 
 function Sidebar() {
   return (
-      <Box sx={{ width: 240, backgroundColor: '#1C1C1C', color: '#FFF', minHeight: '100vh', paddingTop: 2 }}>
-          <Typography variant="h6" sx={{ paddingLeft: 2 }}>Hiruna Kithsandu</Typography>
-          <Typography variant="subtitle2" sx={{ paddingLeft: 2 }}>Employee Manager</Typography>
-          <Box sx={{ paddingTop: 4 }}>
-              <Button component={Link} to="/EmployeeDashboard" startIcon={<DashboardIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                  Dashboard
-              </Button>
-              <Button component={Link} to="/EmployeeList" startIcon={<PeopleIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                  Employees
-              </Button>
-              <Button component={Link} to="/attendance" startIcon={<ListAltIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                  Attendance
-              </Button>
-              <Button component={Link} to="/payroll" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                  Payroll
-              </Button>
-              <Button component={Link} to="/project-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
-                  Project Requests
-              </Button>
-          </Box>
+    <Box sx={{ width: 240, backgroundColor: '#1C1C1C', color: '#FFF', minHeight: '100vh', paddingTop: 2 }}>
+      <Typography variant="h6" sx={{ paddingLeft: 2 }}>Hiruna Kithsandu</Typography>
+      <Typography variant="subtitle2" sx={{ paddingLeft: 2 }}>Employee Manager</Typography>
+      <Box sx={{ paddingTop: 4 }}>
+        <Button component={Link} to="/EmployeeDashboard" startIcon={<DashboardIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+          Dashboard
+        </Button>
+        <Button component={Link} to="/EmployeeList" startIcon={<PeopleIcon />} fullWidth sx={{ justifyContent: 'flex-start',backgroundColor: '#FBBF24', color: '#FFF' }}>
+          Employees
+        </Button>
+        <Button component={Link} to="/attendance" startIcon={<ListAltIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+          Attendance
+        </Button>
+        <Button component={Link} to="/payroll" startIcon={<DescriptionIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+          Payroll
+        </Button>
+        <Button component={Link} to="/project-requests" startIcon={<InventoryIcon />} fullWidth sx={{ justifyContent: 'flex-start', color: '#FFF' }}>
+          Project Requests
+        </Button>
       </Box>
+    </Box>
   );
 }
-  
+
 const fetchEmployees = async () => {
   try {
     const response = await axios.get(URL);
@@ -69,8 +68,10 @@ function EmployeeList() {
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/admindashboard/update-employee/${id}`);
+    navigate(`/employee/${id}`); // Navigate to the employee details page
   };
+
+
 
   const deleteEmployee = async (id) => {
     try {
@@ -251,15 +252,12 @@ function EmployeeList() {
   );
 }
 export default function el() {
-    return (
-        <Box sx={{ display: 'flex' }}>
-      {/* Sidebar takes a fixed width */}
+  return (
+    <Box sx={{ display: 'flex' }}>
       <Sidebar />
-      
-      {/* Main content fills the remaining space */}
       <Box sx={{ flexGrow: 1 }}>
         <EmployeeList />
       </Box>
     </Box>
-    );
+  );
 }

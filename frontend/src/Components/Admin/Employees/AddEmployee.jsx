@@ -24,6 +24,17 @@ function AddEmployee({ onBack }) {
     setEmployee({ ...employee, [name]: value });
   };
 
+
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get(URL);
+      return Array.isArray(response.data) ? response.data : [response.data];
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Reset error state
@@ -31,7 +42,7 @@ function AddEmployee({ onBack }) {
     try {
       await axios.post(URL, employee);
       alert('Employee added successfully');
-      navigate('/admindashboard/employee-management');
+      navigate('/EmployeeList');
     } catch (error) {
       setError(error.response ? error.response.data.message : 'An error occurred');
     }

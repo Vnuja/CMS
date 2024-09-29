@@ -12,11 +12,7 @@ import InventoryRequests from './Components/Supplier/InventoryRequests';
 import EmployeeList from './Components/Employee/EmployeeList';
 import AttendancePage from './Components/Employee/Attendance';
 import LeaveReq from './Components/Employee/LeaveReq';
-
-import Employees from './Components/Employee/Employee';
-import Dashboard from './Components/Employee/Dashboard';
 import ProjectRequests from './Components/Employee/ProjectRequests';
-import Sidebar from './Components/Employee/Sidebar';
 
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import SupplierDashboard from './Components/Admin/SupplierDashboard';
@@ -34,8 +30,10 @@ import EmployeeDetails from './Components/Admin/Employees/EmployeeDetails';
 import AddEmployee from './Components/Admin/Employees/AddEmployee';
 import UpdateEmployee from './Components/Admin/Employees/UpdateEmployee';
 import Employee from './Components/Admin/Employees/Employee';
+import EmployeeProfile from './Components/Employee/EmployeeProfile';
 
 import { AuthProvider } from './Components/Auth/AuthContext';  // Import AuthProvider
+
 
 function App() {
   return (
@@ -63,7 +61,8 @@ function App() {
           <Route path='/EmployeeList' element={<EmployeeList />} />
           <Route path='/attendance' element={<AttendancePage />} />
           <Route path='/leave-requests' element={<LeaveReq />} />
-          <Route path='/orders' element={<Orders />} />
+          <Route path='/employee/:id' element={<EmployeeProfile />} />
+          <Route path='/project-requests' element={<ProjectRequests />} />
 
 
 
