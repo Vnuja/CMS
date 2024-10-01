@@ -236,10 +236,11 @@ function AddEmployee({ onBack }) {
             <Button
               type="submit"
               variant="contained"
-              sx={{ backgroundColor: 'yellow', color: 'black', marginRight: 2 }}
+              sx={{ backgroundColor: '#FEC304', color: 'black', marginRight: 2 }}
             >
               Add Employee
             </Button>
+
             <Button
               variant="contained"
               sx={{ backgroundColor: 'black', color: 'white' }}
